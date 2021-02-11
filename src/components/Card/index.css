@@ -1,28 +1,55 @@
 .Card {
   border: 1px solid #000;
-  display: inline-block;
   margin: 10px;
   padding: 15px;
   width: 320px;
-  position: relative;
-  z-index: 400;
+}
+
+.Card.checked {
+  border: 2px solid red;
+  margin: 9px;
+  border-radius: 20px;
+}
+
+.Card .header {
+  display: flex;
+  justify-content: space-between;
+  min-height: 32px;
+}
+
+.Card .header h2 {
+  max-width: 272px;
+  word-break: break-word;
+}
+
+.Card p {
+  word-break: break-word;
 }
 
 .Card hr {
   margin: 5px auto;
 }
 
-.Card input[type=checkbox] {
-  position: absolute;
-  z-index: 401;
-  top: 20px;
-  right: 20px;
-  width: 20px;
-  height: 20px;
+.Card .actions {
+  display: flex;
+  justify-content: space-between;
+  width: 44px;
 }
 
-.checked {
-  border: 2px solid red;
-  margin: 9px;
-  border-radius: 20px;
+.Card .actions svg,
+.Card .actions input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.Card .editMode input {
+  font-size: 1em;
+}
+
+.Card .editMode textarea {
+  min-height: 80px;
+  padding: 5px;
+  resize: none;
+  width: calc(100% - 11px);
 }
