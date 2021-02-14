@@ -5,11 +5,13 @@ import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa';
 
 function Card(props) {
   const [cardState, setCardState] = useState({
-    caption: props.caption,
-    text: props.children,
     editMode: false,
     checked: false
   });
+
+  const [cardData, setCardData] = [props.data, props.updateFn];
+
+  const [cardTempData, setCardTempData] = useState();
 
   const handleCheckboxChange = () => {
     setCardState({
@@ -19,41 +21,29 @@ function Card(props) {
   };
 
   const enterEditMode = () => {
+    setCardTempData({ ...cardData });
     setCardState({
-      ...cardState,
       checked: false,
-      editMode: true,
-      oldCaption: cardState.caption,
-      oldText: cardState.text
+      editMode: true
     });
   };
 
-  const handleCaptionChange = event => {
-    setCardState({
-      ...cardState,
-      caption: event.target.value
-    });
-  };
-
-  const handleTextChange = event => {
-    setCardState({
-      ...cardState,
-      text: event.target.value
+  const onChangeHandler = (event, prop) => {
+    setCardTempData({
+      ...cardTempData,
+      [prop]: event.target.value
     });
   };
 
   const saveChanges = () => {
-    setCardState({
-      ...cardState,
-      editMode: false
-    });
+    setCardData({ ...cardTempData });
+    exitEditMode();
   };
 
-  const dontSaveChanges = () => {
+  const exitEditMode = () => {
+    setCardTempData(null);
     setCardState({
       ...cardState,
-      caption: cardState.oldCaption,
-      text: cardState.oldText,
       editMode: false
     });
   };
@@ -69,32 +59,35 @@ function Card(props) {
         <div className="editMode">
           <div className="header">
             <input
-              onChange={handleCaptionChange}
-              value={cardState.caption}
+              onChange={e => onChangeHandler(e, 'caption')}
+              value={cardTempData.caption}
               type="text"
             />
             <div className="actions">
               <FaSave onClick={saveChanges} title="Save changes" />
               <FaTimesCircle
-                onClick={dontSaveChanges}
+                onClick={exitEditMode}
                 title="Exit edit mode without saving changes"
               />
             </div>
           </div>
           <hr />
-          <textarea onChange={handleTextChange} value={cardState.text} />
+          <textarea
+            onChange={e => onChangeHandler(e, 'text')}
+            value={cardTempData.text}
+          />
         </div>
       ) : (
         <div>
           <div className="header">
-            <h2>{cardState.caption}</h2>
+            <h2>{cardData.caption}</h2>
             <div className="actions">
               <FaEdit onClick={enterEditMode} />
               <input onChange={handleCheckboxChange} type="checkbox" />
             </div>
           </div>
           <hr />
-          <p>{cardState.text}</p>
+          <p>{cardData.text}</p>
         </div>
       )}
     </div>
