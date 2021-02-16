@@ -4,12 +4,8 @@ import classNames from 'classnames';
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa';
 
 function Card(props) {
-  const [cardState, setCardState] = useState({
-    editMode: false,
-    checked: false
-  });
-
-  const [cardData, setCardData] = [props.data, props.updateFn];
+  const [cardState, setCardState] = [props.data, props.updateFn];
+  const readOnly = props.readOnly;
 
   const [cardTempData, setCardTempData] = useState();
 
@@ -21,8 +17,9 @@ function Card(props) {
   };
 
   const enterEditMode = () => {
-    setCardTempData({ ...cardData });
+    setCardTempData({ ...cardState });
     setCardState({
+      ...cardState,
       checked: false,
       editMode: true
     });
@@ -36,16 +33,19 @@ function Card(props) {
   };
 
   const saveChanges = () => {
-    setCardData({ ...cardTempData });
-    exitEditMode();
+    setCardState({
+      ...cardTempData,
+      editMode: false
+    });
+    setCardTempData(null);
   };
 
   const exitEditMode = () => {
-    setCardTempData(null);
     setCardState({
       ...cardState,
       editMode: false
     });
+    setCardTempData(null);
   };
 
   const className = classNames({
@@ -80,14 +80,14 @@ function Card(props) {
       ) : (
         <div>
           <div className="header">
-            <h2>{cardData.caption}</h2>
+            <h2>{cardState.caption}</h2>
             <div className="actions">
-              <FaEdit onClick={enterEditMode} />
+              {readOnly ? null : <FaEdit onClick={enterEditMode} />}
               <input onChange={handleCheckboxChange} type="checkbox" />
             </div>
           </div>
           <hr />
-          <p>{cardData.text}</p>
+          <p>{cardState.text}</p>
         </div>
       )}
     </div>
