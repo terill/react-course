@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import styled from 'styled-components';
+
 import Header from './components/Header';
 import Card from './components/Card';
 
@@ -100,13 +102,40 @@ function App() {
     setCardsState(cardsState.map(card => ({ ...card, editMode: false })));
   };
 
+  const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+
+    & + label {
+      user-select: none;
+    }
+    & + label:before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #adb5bd;
+      border-radius: 0.25em;
+      margin-right: 4px;
+    }
+
+    &:checked + label::before {
+      border-color: #0b76ef;
+      background-color: #0b76ef;
+    }
+  `;
+
   return (
     <div className="App">
       <Header />
       <div className="content">
-        <label>
-          <input onChange={changeReadOnlyMode} type="checkbox" /> Read Only
-        </label>
+        <StyledCheckbox
+          onChange={changeReadOnlyMode}
+          checked={appState.readOnly}
+          id="readonly"
+        />
+        <label for="readonly">Read Only</label>
         <div className="listCards">{listCards}</div>
       </div>
     </div>
