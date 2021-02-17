@@ -87,7 +87,7 @@ function App() {
   const listCards = cardsState.map(card => (
     <Card
       data={card}
-      updateFn={updateCard}
+      onUpdate={updateCard}
       readOnly={appState.readOnly}
       key={card._id}
     />

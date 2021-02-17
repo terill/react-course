@@ -4,22 +4,21 @@ import classNames from 'classnames';
 import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa';
 
 function Card(props) {
-  const [cardState, setCardState] = [props.data, props.updateFn];
-  const readOnly = props.readOnly;
+  const { data, onUpdate: updateData, readOnly } = props;
 
   const [cardTempData, setCardTempData] = useState();
 
   const handleCheckboxChange = () => {
-    setCardState({
-      ...cardState,
-      checked: !cardState.checked
+    updateData({
+      ...data,
+      checked: !data.checked
     });
   };
 
   const enterEditMode = () => {
-    setCardTempData({ ...cardState });
-    setCardState({
-      ...cardState,
+    setCardTempData({ ...data });
+    updateData({
+      ...data,
       checked: false,
       editMode: true
     });
@@ -33,7 +32,7 @@ function Card(props) {
   };
 
   const saveChanges = () => {
-    setCardState({
+    updateData({
       ...cardTempData,
       editMode: false
     });
@@ -41,8 +40,8 @@ function Card(props) {
   };
 
   const exitEditMode = () => {
-    setCardState({
-      ...cardState,
+    updateData({
+      ...data,
       editMode: false
     });
     setCardTempData(null);
@@ -50,12 +49,12 @@ function Card(props) {
 
   const className = classNames({
     Card: true,
-    checked: cardState.checked
+    checked: data.checked
   });
 
   return (
     <div className={className}>
-      {cardState.editMode ? (
+      {data.editMode ? (
         <div className="editMode">
           <div className="header">
             <input
@@ -80,14 +79,14 @@ function Card(props) {
       ) : (
         <div>
           <div className="header">
-            <h2>{cardState.caption}</h2>
+            <h2>{data.caption}</h2>
             <div className="actions">
-              {readOnly ? null : <FaEdit onClick={enterEditMode} />}
+              {!readOnly && <FaEdit onClick={enterEditMode} />}
               <input onChange={handleCheckboxChange} type="checkbox" />
             </div>
           </div>
           <hr />
-          <p>{cardState.text}</p>
+          <p>{data.text}</p>
         </div>
       )}
     </div>
