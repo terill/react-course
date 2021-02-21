@@ -1,4 +1,5 @@
 .Card {
+  position: relative;
   border: 1px solid #000;
   margin: 10px;
   padding: 15px;
@@ -11,45 +12,6 @@
   border-radius: 20px;
 }
 
-.Card .header {
-  display: flex;
-  justify-content: space-between;
-  min-height: 32px;
-}
-
-.Card .header h2 {
-  max-width: 272px;
-  word-break: break-word;
-}
-
-.Card p {
-  word-break: break-word;
-}
-
 .Card hr {
   margin: 5px auto;
-}
-
-.Card .actions {
-  display: flex;
-  justify-content: space-between;
-  width: 44px;
-}
-
-.Card .actions svg,
-.Card .actions input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.Card .editMode input {
-  font-size: 1em;
-}
-
-.Card .editMode textarea {
-  min-height: 80px;
-  padding: 5px;
-  resize: none;
-  width: calc(100% - 11px);
 }

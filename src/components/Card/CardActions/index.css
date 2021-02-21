@@ -1,0 +1,15 @@
+.Card .actions {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 44px;
+}
+
+.Card .actions svg,
+.Card .actions input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
