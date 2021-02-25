@@ -1,0 +1,10 @@
+.Card .body p {
+  word-break: break-word;
+}
+
+.Card .body textarea {
+  min-height: 80px;
+  padding: 5px;
+  resize: none;
+  width: calc(100% - 11px);
+}

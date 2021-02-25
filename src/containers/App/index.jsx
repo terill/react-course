@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import './index.css';
 import styled from 'styled-components';
 
-import Header from './components/Header';
-import Card from './components/Card';
+import Header from '../../components/Header';
+import CardList from '../../components/CardList';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -86,20 +86,15 @@ function App() {
     setCardsState(cardsState.map(card => (c._id === card._id ? c : card)));
   };
 
-  const listCards = cardsState.map(card => (
-    <Card
-      data={card}
-      onUpdate={updateCard}
-      readOnly={appState.readOnly}
-      key={card._id}
-    />
-  ));
-
   const changeReadOnlyMode = () => {
     setAppState({
       readOnly: !appState.readOnly
     });
     setCardsState(cardsState.map(card => ({ ...card, editMode: false })));
+  };
+
+  const deleteSelectedCards = () => {
+    setCardsState(cardsState.filter(card => !card.checked));
   };
 
   const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
@@ -108,6 +103,7 @@ function App() {
     opacity: 0;
 
     & + label {
+      cursor: pointer;
       user-select: none;
     }
     & + label:before {
@@ -126,6 +122,11 @@ function App() {
     }
   `;
 
+  const StyledButton = styled.button`
+    margin: 0 16px;
+    cursor: pointer;
+  `;
+
   return (
     <div className="App">
       <Header />
@@ -135,8 +136,16 @@ function App() {
           checked={appState.readOnly}
           id="readonly"
         />
-        <label for="readonly">Read Only</label>
-        <div className="listCards">{listCards}</div>
+        <label htmlFor="readonly">Read Only</label>
+        <StyledButton onClick={deleteSelectedCards}>
+          Delete selected cards
+        </StyledButton>
+        <CardList
+          className="listCards"
+          data={cardsState}
+          readOnly={appState.readOnly}
+          onCardUpdate={updateCard}
+        />
       </div>
     </div>
   );

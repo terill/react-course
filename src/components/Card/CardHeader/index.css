@@ -1,0 +1,14 @@
+.Card .header {
+  display: flex;
+  justify-content: space-between;
+  min-height: 32px;
+}
+
+.Card .header h2 {
+  max-width: 272px;
+  word-break: break-word;
+}
+
+.Card .header input {
+  font-size: 1em;
+}

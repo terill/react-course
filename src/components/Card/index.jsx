@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './index.css';
 import classNames from 'classnames';
-import { FaEdit, FaSave, FaTimesCircle } from 'react-icons/fa';
+
+import CardHeader from './CardHeader';
+import CardActions from './CardActions';
+import CardBody from './CardBody';
 
 function Card(props) {
   const { data, onUpdate: updateData, readOnly } = props;
@@ -16,7 +19,7 @@ function Card(props) {
   };
 
   const enterEditMode = () => {
-    setCardTempData({ ...data });
+    setCardTempData({ ...data, checked: false });
     updateData({
       ...data,
       checked: false,
@@ -54,41 +57,27 @@ function Card(props) {
 
   return (
     <div className={className}>
-      {data.editMode ? (
-        <div className="editMode">
-          <div className="header">
-            <input
-              onChange={e => onChangeHandler(e, 'caption')}
-              value={cardTempData.caption}
-              type="text"
-            />
-            <div className="actions">
-              <FaSave onClick={saveChanges} title="Save changes" />
-              <FaTimesCircle
-                onClick={exitEditMode}
-                title="Exit edit mode without saving changes"
-              />
-            </div>
-          </div>
-          <hr />
-          <textarea
-            onChange={e => onChangeHandler(e, 'text')}
-            value={cardTempData.text}
-          />
-        </div>
-      ) : (
-        <div>
-          <div className="header">
-            <h2>{data.caption}</h2>
-            <div className="actions">
-              {!readOnly && <FaEdit onClick={enterEditMode} />}
-              <input onChange={handleCheckboxChange} type="checkbox" />
-            </div>
-          </div>
-          <hr />
-          <p>{data.text}</p>
-        </div>
-      )}
+      <CardHeader
+        editMode={data.editMode}
+        editCaption={cardTempData && cardTempData.caption}
+        onChange={onChangeHandler}
+        caption={data.caption}
+      />
+      <hr />
+      <CardBody
+        editMode={data.editMode}
+        editText={cardTempData && cardTempData.text}
+        onChange={onChangeHandler}
+        text={data.text}
+      />
+      <CardActions
+        editMode={data.editMode}
+        readOnly={readOnly}
+        onSave={saveChanges}
+        onExitEditMode={exitEditMode}
+        onEnterEditMode={enterEditMode}
+        onCheckboxChange={handleCheckboxChange}
+      />
     </div>
   );
 }
