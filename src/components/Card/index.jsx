@@ -19,12 +19,12 @@ function Card(props) {
   };
 
   const enterEditMode = () => {
-    setCardTempData({ ...data, checked: false });
     updateData({
       ...data,
       checked: false,
       editMode: true
     });
+    setCardTempData({ ...data });
   };
 
   const onChangeHandler = (event, prop) => {
