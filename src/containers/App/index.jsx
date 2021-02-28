@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import Header from '../../components/Header';
 import CardList from '../../components/CardList';
@@ -97,6 +98,17 @@ function App() {
     setCardsState(cardsState.filter(card => !card.checked));
   };
 
+  const createNewCard = () => {
+    const newCard = {
+      _id: uuidv4(),
+      caption: 'New card',
+      text: '...with some text',
+      checked: false,
+      editMode: false
+    };
+    setCardsState([...cardsState, newCard]);
+  };
+
   const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
     position: absolute;
     z-index: -1;
@@ -123,7 +135,7 @@ function App() {
   `;
 
   const StyledButton = styled.button`
-    margin: 0 16px;
+    margin-left: 8px;
     cursor: pointer;
   `;
 
@@ -140,6 +152,7 @@ function App() {
         <StyledButton onClick={deleteSelectedCards}>
           Delete selected cards
         </StyledButton>
+        <StyledButton onClick={createNewCard}>Add a new card</StyledButton>
         <CardList
           className="listCards"
           data={cardsState}
