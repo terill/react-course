@@ -101,11 +101,11 @@ function App() {
   const createNewCard = () => {
     const newCard = {
       _id: uuidv4(),
+      caption: 'New card',
+      text: '...with some text',
       checked: false,
       editMode: false
     };
-    newCard.caption = prompt('Please enter the caption', '');
-    newCard.text = prompt('Please enter the text', '');
     setCardsState([...cardsState, newCard]);
   };
 
