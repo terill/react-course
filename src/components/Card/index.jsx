@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import CardHeader from './CardHeader';
 import CardActions from './CardActions';
 import CardBody from './CardBody';
-import WithLoadingDelay from '../../hoc/WithLoadingDelay';
+import withLoadingDelay from '../../hoc/withLoadingDelay';
 
 function Card(props) {
   const { data, onUpdate: updateData, readOnly } = props;
@@ -57,32 +57,30 @@ function Card(props) {
   });
 
   return (
-    <WithLoadingDelay>
-      <div className={className}>
-        <CardHeader
-          editMode={data.editMode}
-          editCaption={cardTempData && cardTempData.caption}
-          onChange={onChangeHandler}
-          caption={data.caption}
-        />
-        <hr />
-        <CardBody
-          editMode={data.editMode}
-          editText={cardTempData && cardTempData.text}
-          onChange={onChangeHandler}
-          text={data.text}
-        />
-        <CardActions
-          editMode={data.editMode}
-          readOnly={readOnly}
-          onSave={saveChanges}
-          onExitEditMode={exitEditMode}
-          onEnterEditMode={enterEditMode}
-          onCheckboxChange={handleCheckboxChange}
-        />
-      </div>
-    </WithLoadingDelay>
+    <div className={className}>
+      <CardHeader
+        editMode={data.editMode}
+        editCaption={cardTempData && cardTempData.caption}
+        onChange={onChangeHandler}
+        caption={data.caption}
+      />
+      <hr />
+      <CardBody
+        editMode={data.editMode}
+        editText={cardTempData && cardTempData.text}
+        onChange={onChangeHandler}
+        text={data.text}
+      />
+      <CardActions
+        editMode={data.editMode}
+        readOnly={readOnly}
+        onSave={saveChanges}
+        onExitEditMode={exitEditMode}
+        onEnterEditMode={enterEditMode}
+        onCheckboxChange={handleCheckboxChange}
+      />
+    </div>
   );
 }
 
-export default Card;
+export default withLoadingDelay(Card);
