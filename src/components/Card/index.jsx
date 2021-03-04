@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import CardHeader from './CardHeader';
 import CardActions from './CardActions';
 import CardBody from './CardBody';
+import withLoadingDelay from '../../hoc/withLoadingDelay';
 
 function Card(props) {
   const { data, onUpdate: updateData, readOnly } = props;
@@ -82,4 +83,4 @@ function Card(props) {
   );
 }
 
-export default Card;
+export default withLoadingDelay(Card);
