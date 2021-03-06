@@ -4,9 +4,13 @@ import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 
+import { CardsProvider } from './api/CardsContext';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <CardsProvider>
+      <App />
+    </CardsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

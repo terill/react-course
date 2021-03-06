@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import CardHeader from './CardHeader';
 import CardActions from './CardActions';
@@ -82,5 +83,16 @@ function Card(props) {
     </div>
   );
 }
+
+Card.propTypes = {
+  data: PropTypes.shape({
+    caption: PropTypes.string,
+    text: PropTypes.string,
+    checked: PropTypes.bool,
+    editMode: PropTypes.bool
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired
+};
 
 export default withLoadingDelay(Card);
