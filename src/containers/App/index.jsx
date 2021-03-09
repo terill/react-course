@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import './index.css';
 import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
 
 import Header from '../../components/Header';
 import CardList from '../../components/CardList';
@@ -12,32 +11,19 @@ function App() {
     readOnly: false
   });
 
-  const [cardsState, setCardsState] = useContext(CardsContext);
-
-  const updateCard = c => {
-    setCardsState(cardsState.map(card => (c._id === card._id ? c : card)));
-  };
+  const {
+    cardsState,
+    setCardsState,
+    updateCard,
+    deleteSelectedCards,
+    createNewCard
+  } = useContext(CardsContext);
 
   const changeReadOnlyMode = () => {
     setAppState({
       readOnly: !appState.readOnly
     });
     setCardsState(cardsState.map(card => ({ ...card, editMode: false })));
-  };
-
-  const deleteSelectedCards = () => {
-    setCardsState(cardsState.filter(card => !card.checked));
-  };
-
-  const createNewCard = () => {
-    const newCard = {
-      _id: uuidv4(),
-      caption: 'New card',
-      text: '...with some text',
-      checked: false,
-      editMode: false
-    };
-    setCardsState([...cardsState, newCard]);
   };
 
   const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`

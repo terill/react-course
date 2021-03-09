@@ -4,12 +4,11 @@ import './index.css';
 import { CardsContext } from '../../api/CardsContext';
 
 const Badge = () => {
-  const [cards] = useContext(CardsContext);
-  const amount = cards.length;
+  const { cardsAmount } = useContext(CardsContext);
 
   return (
     <button className="Badge">
-      Cards <span>{amount}</span>
+      Cards <span>{cardsAmount()}</span>
     </button>
   );
 };
