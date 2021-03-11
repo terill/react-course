@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './index.css';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Header from '../../components/Header';
 import CardList from '../../components/CardList';
@@ -18,6 +19,22 @@ function App() {
     deleteSelectedCards,
     createNewCard
   } = useContext(CardsContext);
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://raw.githubusercontent.com/BrunnerLivio/PokemonDataGraber/master/output.json'
+      )
+      .then(res => {
+        setCardsState(
+          res.data.slice(0, 15).map(obj => ({
+            _id: obj.Number,
+            caption: obj.Name,
+            text: obj.About
+          }))
+        );
+      });
+  }, []);
 
   const changeReadOnlyMode = () => {
     setAppState({
