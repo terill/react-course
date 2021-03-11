@@ -2,4 +2,5 @@ header {
   padding: 20px;
   text-align: center;
   background-color: rgba(200, 200, 200, 0.5);
+  position: relative;
 }
