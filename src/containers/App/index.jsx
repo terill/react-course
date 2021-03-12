@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.css';
 import axios from 'axios';
 
@@ -57,8 +57,7 @@ function App() {
               )}
             />
             <Route path="/signin" component={SignIn} />
-            <Route path="/404" component={NotFound} />
-            <Redirect to="/404" />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </div>
