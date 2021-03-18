@@ -1,0 +1,4 @@
+.Home .listCards {
+  display: flex;
+  flex-wrap: wrap;
+}

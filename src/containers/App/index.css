@@ -1,8 +1,3 @@
 .App .content {
   padding: 20px;
 }
-
-.App .listCards {
-  display: flex;
-  flex-wrap: wrap;
-}

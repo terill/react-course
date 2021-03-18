@@ -1,6 +1,11 @@
-header {
-  padding: 20px;
-  text-align: center;
+.Header {
+  padding: 10px;
   background-color: rgba(200, 200, 200, 0.5);
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Header a {
+  margin: 10px;
 }

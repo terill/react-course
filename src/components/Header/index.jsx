@@ -1,11 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './index.css';
 
 import Badge from '../Badge';
 
 const Header = () => (
-  <header>
-    <h1>Hello World!</h1>
+  <header className="Header">
+    <div>
+      <Link to="/">Home</Link>
+      <Link to="/signin">Sign In</Link>
+    </div>
     <Badge />
   </header>
 );
