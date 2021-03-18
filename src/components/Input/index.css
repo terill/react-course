@@ -1,0 +1,19 @@
+.Input {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.Input label {
+  font-size: 0.8rem;
+}
+
+.Input input {
+  border: 1px solid #000;
+  outline: none;
+}
+
+.Input input.invalid {
+  border: 1px solid red;
+  background-color: rgb(243, 147, 166);
+}

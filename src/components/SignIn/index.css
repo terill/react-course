@@ -1,0 +1,8 @@
+.SignIn {
+  padding: 8px;
+  width: fit-content;
+}
+
+.SignIn * {
+  margin: 2px 0;
+}
