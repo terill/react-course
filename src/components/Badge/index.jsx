@@ -1,16 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import './index.css';
 
-import { CardsContext } from '../../api/CardsContext';
-
-const Badge = () => {
-  const { cardsAmount } = useContext(CardsContext);
+const Badge = props => {
+  const cardsAmount = props.cardsAmount;
 
   return (
     <button className="Badge">
-      Cards <span>{cardsAmount()}</span>
+      Cards <span>{cardsAmount}</span>
     </button>
   );
 };
 
-export default Badge;
+const mapStateToProps = state => {
+  return {
+    cardsAmount: state.cards.length
+  };
+};
+
+export default connect(mapStateToProps)(Badge);

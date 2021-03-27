@@ -1,38 +1,42 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './index.css';
+import { connect } from 'react-redux';
 
-import { CardsContext } from '../../api/CardsContext';
 import { StyledCheckbox, StyledButton } from '../styled';
 import CardList from '../../components/CardList';
 
 const Home = props => {
-  const {
-    cardsState,
-    updateCard,
-    deleteSelectedCards,
-    createNewCard
-  } = useContext(CardsContext);
-
   return (
     <div className="Home">
       <StyledCheckbox
-        onChange={props.changeReadOnlyMode}
-        checked={props.readOnly}
+        onChange={props.toggleReadOnlyMode}
+        checked={props.readOnlyMode}
         id="readonly"
       />
       <label htmlFor="readonly">Read Only</label>
-      <StyledButton onClick={deleteSelectedCards}>
+      <StyledButton onClick={props.deleteSelectedCards}>
         Delete selected cards
       </StyledButton>
-      <StyledButton onClick={createNewCard}>Add a new card</StyledButton>
-      <CardList
-        className="listCards"
-        data={cardsState}
-        readOnly={props.readOnly}
-        onCardUpdate={updateCard}
-      />
+      <StyledButton onClick={props.createNewCard}>Add a new card</StyledButton>
+      <CardList className="listCards" data={props.cards} />
     </div>
   );
 };
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    cards: state.cards,
+    readOnlyMode: state.app.readOnlyMode
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createNewCard: () => dispatch({ type: 'ADD_CARD' }),
+    deleteSelectedCards: () => dispatch({ type: 'DELETE_SELECTED_CARDS' }),
+    updateCard: card => dispatch({ type: 'UPDATE_CARD', card: card }),
+    toggleReadOnlyMode: () => dispatch({ type: 'TOGGLE_READ_ONLY_MODE' })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
