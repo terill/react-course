@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './index.css';
 
-const Badge = props => {
-  const cardsAmount = props.cardsAmount;
+const Badge = () => {
+  const cardsAmount = useSelector(state => state.cards.length);
 
   return (
     <button className="Badge">
@@ -13,10 +13,4 @@ const Badge = props => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    cardsAmount: state.cards.length
-  };
-};
-
-export default connect(mapStateToProps)(Badge);
+export default Badge;
