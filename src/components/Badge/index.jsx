@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+
 import './index.css';
 
-import { CardsContext } from '../../api/CardsContext';
-
 const Badge = () => {
-  const { cardsAmount } = useContext(CardsContext);
+  const cardsAmount = useSelector(state => state.cards.length);
 
   return (
     <button className="Badge">
-      Cards <span>{cardsAmount()}</span>
+      Cards <span>{cardsAmount}</span>
     </button>
   );
 };

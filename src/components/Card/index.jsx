@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './index.css';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
+import { connect } from 'react-redux';
 
 import CardHeader from './CardHeader';
 import CardActions from './CardActions';
@@ -9,12 +11,14 @@ import CardBody from './CardBody';
 import withLoadingDelay from '../../hoc/withLoadingDelay';
 
 function Card(props) {
-  const { data, onUpdate: updateData, readOnly } = props;
+  const { data } = props;
 
   const [cardTempData, setCardTempData] = useState();
 
+  const history = useHistory();
+
   const handleCheckboxChange = () => {
-    updateData({
+    props.updateCard({
       ...data,
       checked: !data.checked
     });
@@ -22,7 +26,7 @@ function Card(props) {
 
   const enterEditMode = () => {
     setCardTempData({ ...data, checked: false });
-    updateData({
+    props.updateCard({
       ...data,
       checked: false,
       editMode: true
@@ -37,7 +41,7 @@ function Card(props) {
   };
 
   const saveChanges = () => {
-    updateData({
+    props.updateCard({
       ...cardTempData,
       editMode: false
     });
@@ -45,11 +49,15 @@ function Card(props) {
   };
 
   const exitEditMode = () => {
-    updateData({
+    props.updateCard({
       ...data,
       editMode: false
     });
     setCardTempData(null);
+  };
+
+  const openPage = () => {
+    history.push(`/card/${data.id}`);
   };
 
   const className = classNames({
@@ -58,23 +66,25 @@ function Card(props) {
   });
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      onDoubleClick={!data.editMode ? openPage : undefined}>
       <CardHeader
         editMode={data.editMode}
-        editCaption={cardTempData && cardTempData.caption}
+        editCaption={cardTempData ? cardTempData.caption : ''}
         onChange={onChangeHandler}
         caption={data.caption}
       />
       <hr />
       <CardBody
         editMode={data.editMode}
-        editText={cardTempData && cardTempData.text}
+        editText={cardTempData ? cardTempData.text : ''}
         onChange={onChangeHandler}
         text={data.text}
       />
       <CardActions
         editMode={data.editMode}
-        readOnly={readOnly}
+        readOnlyMode={props.readOnlyMode}
         onSave={saveChanges}
         onExitEditMode={exitEditMode}
         onEnterEditMode={enterEditMode}
@@ -90,9 +100,22 @@ Card.propTypes = {
     text: PropTypes.string,
     checked: PropTypes.bool,
     editMode: PropTypes.bool
-  }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired
+  }).isRequired
 };
 
-export default withLoadingDelay(Card);
+const mapStateToProps = state => {
+  return {
+    readOnlyMode: state.app.readOnlyMode
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateCard: card => dispatch({ type: 'UPDATE_CARD', card: card })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLoadingDelay(Card));

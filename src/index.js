@@ -1,16 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+
 import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 
-import { CardsProvider } from './api/CardsContext';
+import rootReducer, { fetchData } from './store/reducer';
+
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+store.dispatch(fetchData);
 
 ReactDOM.render(
   <React.StrictMode>
-    <CardsProvider>
+    <Provider store={store}>
       <App />
-    </CardsProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
