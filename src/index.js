@@ -9,8 +9,9 @@ import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 
 import rootReducer, { fetchData } from './store/reducer';
+import log from './utils/log';
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, log));
 store.dispatch(fetchData);
 
 ReactDOM.render(
