@@ -9,13 +9,7 @@ import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 
 import rootReducer, { fetchData } from './store/reducer';
-
-const log = ({ getState }) => next => action => {
-  console.log('[redux] action:', action);
-  const result = next(action);
-  console.log('[redux] next state:', getState());
-  return result;
-};
+import log from './utils/log';
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, log));
 store.dispatch(fetchData);
