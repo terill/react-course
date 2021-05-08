@@ -26,6 +26,6 @@ export const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 export const StyledButton = styled.button`
-  margin-left: 8px;
+  margin: 0 4px;
   cursor: pointer;
 `;

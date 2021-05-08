@@ -4,7 +4,7 @@ import axios from 'axios';
 const initialState = {
   cards: [],
   app: {
-    readOnlyMode: false
+    readOnlyMode: JSON.parse(localStorage.getItem('readOnlyMode'))
   }
 };
 
@@ -59,6 +59,7 @@ const reducer = (state = initialState, action) => {
     case 'TOGGLE_READ_ONLY_MODE':
       const appState = { ...state.app };
       appState.readOnlyMode = !appState.readOnlyMode;
+      localStorage.setItem('readOnlyMode', JSON.stringify(appState.readOnlyMode));
       return {
         ...state,
         app: appState

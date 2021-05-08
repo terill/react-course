@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import './index.css';
 
 const Badge = () => {
-  const cardsAmount = useSelector(state => state.cards.length);
+  const cardsAmount = useSelector(state => state.main.cards.length);
 
   return (
     <button className="Badge">

@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import './index.css';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { login } from '../../store/auth';
 import Input from '../Input';
 
 const SignIn = () => {
+  const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const [form, setForm] = useState({
     fields: {
       email: {
@@ -34,10 +41,20 @@ const SignIn = () => {
     },
     formIsValid: false
   });
-  const history = useHistory();
+
+  if (user) {
+    return <Redirect to={'/'} />;
+  }
 
   const submit = e => {
     e.preventDefault();
+
+    const userData = {
+      email: form.fields.email.value,
+      password: form.fields.password.value
+    };
+
+    dispatch(login(userData));
 
     history.push('/');
   };
