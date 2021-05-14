@@ -15,8 +15,12 @@ function CardActions(props) {
         </>
       ) : (
         <>
-          {!props.readOnlyMode && <FaEdit onClick={props.onEnterEditMode} />}
-          <input onChange={props.onCheckboxChange} type="checkbox" />
+          {!props.readOnlyMode && (
+            <>
+              <FaEdit onClick={props.onEnterEditMode} />
+              <input onChange={props.onCheckboxChange} type="checkbox" />
+            </>
+          )}
         </>
       )}
     </div>

@@ -105,7 +105,7 @@ Card.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    readOnlyMode: state.app.readOnlyMode
+    readOnlyMode: state.main.app.readOnlyMode
   };
 };
 

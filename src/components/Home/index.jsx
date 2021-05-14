@@ -2,22 +2,22 @@ import React from 'react';
 import './index.css';
 import { connect } from 'react-redux';
 
-import { StyledCheckbox, StyledButton } from '../styled';
+import { StyledButton } from '../styled';
 import CardList from '../../components/CardList';
 
 const Home = props => {
   return (
     <div className="Home">
-      <StyledCheckbox
-        onChange={props.toggleReadOnlyMode}
-        checked={props.readOnlyMode}
-        id="readonly"
-      />
-      <label htmlFor="readonly">Read Only</label>
-      <StyledButton onClick={props.deleteSelectedCards}>
-        Delete selected cards
-      </StyledButton>
-      <StyledButton onClick={props.createNewCard}>Add a new card</StyledButton>
+      {!props.readOnlyMode && (
+        <>
+          <StyledButton onClick={props.deleteSelectedCards}>
+            Delete selected cards
+          </StyledButton>
+          <StyledButton onClick={props.createNewCard}>
+            Add a new card
+          </StyledButton>
+        </>
+      )}
       <CardList className="listCards" data={props.cards} />
     </div>
   );
@@ -25,8 +25,8 @@ const Home = props => {
 
 const mapStateToProps = state => {
   return {
-    cards: state.cards,
-    readOnlyMode: state.app.readOnlyMode
+    cards: state.main.cards,
+    readOnlyMode: state.main.app.readOnlyMode
   };
 };
 
