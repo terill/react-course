@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './index.css';
 
 import Header from '../../components/Header';
@@ -10,6 +11,8 @@ import Settings from '../../components/Settings';
 import CardPage from '../../components/CardPage';
 
 const App = () => {
+  const isAdmin = useSelector(state => state.auth.isAdmin);
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -18,7 +21,7 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/signin" component={SignIn} />
-            <Route path="/settings" component={Settings} />
+            {isAdmin && <Route path="/settings" component={Settings} />}
             <Route path="/card/:id" component={CardPage} />
             <Route component={NotFound} />
           </Switch>
